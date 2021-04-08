@@ -1,7 +1,6 @@
 n = int(input())
 A = list(map(int, input().split()))
 dp = [1] * n
-# dp.append(A[0])
 
 for i in range(n):
     for j in range(i):
