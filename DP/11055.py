@@ -9,3 +9,4 @@ for i in range(n):
             dp[i] = max(dp[i], dp[j]+a[i])
         print(dp)
 
+# 다시 풀어보기
