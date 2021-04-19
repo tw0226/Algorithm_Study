@@ -7,6 +7,6 @@ for i in range(n):
     for j in range(i):
         if a[i]>a[j]:
             dp[i] = max(dp[i], dp[j]+a[i])
-        print(dp)
-
+        print(i, j, dp)
+print(max(dp))
 # 다시 풀어보기
