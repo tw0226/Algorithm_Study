@@ -2,6 +2,8 @@ T = int(input())
 
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
+
+
 def bfs(point):
     while len(point) != 0:
         x, y = point.pop(0)
@@ -10,6 +12,7 @@ def bfs(point):
             _x = x + dx[idx]
             _y = y + dy[idx]
             if 0<=_x<N and 0<=_y<M and X[_x][_y] !=0:
+                X[_x][_y] = 0
                 point.append((_x, _y))
 
 for i in range(T):
@@ -25,5 +28,6 @@ for i in range(T):
             if X[x][y] != 0:
                 bfs([(x,y)])
                 count += 1
+    
     print(count)    
     
