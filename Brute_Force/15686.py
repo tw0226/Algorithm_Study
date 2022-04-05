@@ -1,5 +1,4 @@
 import itertools
-from copy import deepcopy
 N, M = map(int, input().split())
 x = [0 for i in range(N+1)]
 chicken =[]
