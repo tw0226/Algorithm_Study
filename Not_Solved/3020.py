@@ -10,7 +10,7 @@
 
 # 포인트 : 이분탐색에 목 매지말고 제대로 풀자.
 N, H = map(int, input().split())
-bottom, top = [0 for i in range(H)], [0 for i in range(H)]
+bottom, top = [0 for i in range(H+1)], [0 for i in range(H+1)]
 for i in range(N):
     h = int(input())
     if i%2==0:
@@ -18,27 +18,20 @@ for i in range(N):
     else:
         top[h] += 1
 
-for i in range(H-1, 0, -1):
-    bottom[i-1] += bottom[i]
-    top[H-i] += top[H-(i+1)]
+for i in range(H-1, 0, -1): # << 이 부분에서 많이 어려워했다...
+    bottom[i] += bottom[i+1]
+    top[i] += top[i+1]
 
-# print(bottom)
-# print(top)
-# print(sorted(top, reverse=False))
+print(bottom[1:])
+print(top[1:])
 
-count = 0
-start, end = 0, H-1
-min_value = 1e11
-while start < end:
-    current_value = bottom[start] + top[H-(1+start)]
-    if current_value < min_value:
-        min_value = current_value
-        count = 1
-    
-    if min_value <= current_value:
-        count += 1
-        start +=1
-    else:
-        end +=1
-    print(start, end, current_value, min_value, count)
-print(min_value, count)
+min_value = N
+min_count = 0
+for i in range(1, H+1):
+    x = bottom[i] + top[H-i+1]
+    if x < min_value:
+        min_count = 1
+        min_value = x
+    elif x == min_value:
+        min_count += 1
+print(min_value, min_count)
