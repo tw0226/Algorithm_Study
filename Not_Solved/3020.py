@@ -10,27 +10,35 @@
 
 # 포인트 : 이분탐색에 목 매지말고 제대로 풀자.
 N, H = map(int, input().split())
-bottom, top = [0 for i in range(H+1)], [0 for i in range(H+1)]
+bottom, top = [0 for i in range(H)], [0 for i in range(H)]
 for i in range(N):
-    h = int(input())-1
+    h = int(input())
     if i%2==0:
-        bottom[h] = 1
+        bottom[h] += 1
     else:
         top[h] += 1
 
-for i in range(h-1, -1, -1):
-    top[i] += top[i+1]
-    bottom[i] += bottom[i+1]
+for i in range(H-1, 0, -1):
+    bottom[i-1] += bottom[i]
+    top[H-i] += top[H-(i+1)]
 
-min_count = 0
-min_obstacle = 1e11
-while i in range(1, H+1):
-    count = top[H-i+1] + bottom[i]
-    if count < min_obstacle:
-        min_count = count
-        min_count = 1
-    if min_count == count:
-        min_count += 1
-        continue 
+# print(bottom)
+# print(top)
+# print(sorted(top, reverse=False))
 
-print(min_obstacle, min_count)
+count = 0
+start, end = 0, H-1
+min_value = 1e11
+while start < end:
+    current_value = bottom[start] + top[H-(1+start)]
+    if current_value < min_value:
+        min_value = current_value
+        count = 1
+    
+    if min_value <= current_value:
+        count += 1
+        start +=1
+    else:
+        end +=1
+    print(start, end, current_value, min_value, count)
+print(min_value, count)
