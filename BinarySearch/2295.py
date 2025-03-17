@@ -7,22 +7,19 @@
 # for 1<y<N 
 #   for 2<z<N로 +해보면서 가는데 이럼 느리니까 Z 축부터 이분탐색 해보자 그러면 log(N) ** 3
 # 푸는 방법
-# # x+y+z = k 라면 x+y = z-k 도 가능하다
+# # x+y+z = k 라면 x+y = k-z 도 가능하다
 # # x+y 를 집합에 저장시켜놓고, z,k 를 루프 돌아보면서 탐색하기
-N = int(input())
-U = []
-for i in range(N):
-    U.append(int(input()))
-U.sort()
-pool = set()
 
+N =  int(input())
+U = sorted([int(input()) for i in range(N)])
+combi = set()
 for x in U:
     for y in U:
-        pool.add(x+y)
+        combi.add(x+y)
 
-def solve():
-    for i in range(len(U)-1, -1, -1):
-        for j in range(i+1):
-            if U[i]-U[j] in pool:
-                return U[i]
-print(solve())
+def get_max():
+    for k in range(N-1, -1, -1):
+        for z in range(k-1, -1, -1):
+            if U[k]-U[z] in combi:
+                return U[k]
+print(get_max())
