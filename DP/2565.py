@@ -1,18 +1,12 @@
 n = int(input())
-dp = [0 for _ in range(n+1)]
-items = []
-b = []
-for _ in range(n):
-    items.append(list(map(int, input().split())))
-items = sorted(items, key=lambda x: x[0])
-
-for i in items:
-    b.append(i[1])
-print(b)
+A = []
+for i in range(n):
+    x,y = map(int, input().split())
+    A.append([x,y])
+A.sort()
+dp = [1 for i in range(n)]
 for i in range(n):
     for j in range(i):
-        if b[i] > b[j] and dp[i] < dp[j]:
-            dp[i] = dp[j]
-    dp[i] +=1
-print(dp)
-print(n - max(dp))
+        if A[i][1] > A[j][1]:
+            dp[i] = max(dp[i], dp[j]+1)
+print(n-max(dp))
