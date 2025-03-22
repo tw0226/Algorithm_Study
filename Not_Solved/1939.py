@@ -1,37 +1,36 @@
 from collections import deque
-import sys
-N, M = map(int, input().split())
-graph = [[] for i in range(N+1)]
-for i in range(M):
-    a, b, c = map(int, input().split())
-    graph[a].append([b,c])
-    graph[b].append([a,c])
+n, m = map(int, input().split())
+graph = [[] for i in range(n+1)]
+for i in range(m):
+    a,b,c = map(int, input().split())
+    graph[a].append([b, c])
+    graph[b].append([a, c])
 
-def bfs(mid):
-    visited = [False for i in range(N+1)]
+_from, _to = map(int, input().split())
+start, end = 1, int(1e9)
+
+def bfs(val):
+    visited = [0 for i in range(n+1)]
     queue = deque()
-    queue.append(init)
-    visited[init] = True
-
+    queue.append(_from)
+    visited[_from] = True
     while queue:
-        idx = queue.popleft()
-        for i,w in graph[idx]:
-            if not visited[i] and mid <= w:
-                queue.append(i)
-                visited[i] = True
-    if visited[dest]:
+        curr = queue.popleft()
+        for dest, weight in graph[curr]:
+            if not visited[dest] and weight >= val:
+                visited[dest] = True
+                queue.append(dest)
+    if visited[_to]:
         return True
     else:
         return False
 
-init, dest = map(int, input().split())
-start, end = 1, 1e9
 result = 0
-while start <= end:
+while start<=end:
     mid = (start+end)//2
     if bfs(mid):
+        start = mid+1
         result = mid
-        start = mid +1
-    else: 
-        end = mid -1
-print(int(result))
+    else:
+        end = mid-1
+print(result)
