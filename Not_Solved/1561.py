@@ -8,7 +8,7 @@ p = list(map(int, sys.stdin.readline().split()))
 if n<m:
     print(n)
 else:
-    start, end = 1, 2e9
+    start, end = 1, 6e10
     total = 0
     while start <= end:
         mid = (start+end)//2
@@ -21,13 +21,13 @@ else:
         else:
             start = mid +1
         
-        count = m
-        for i in range(m):
-            count += (total-1)//p[i]
-        
-        for i in range(m):
-            if total % p[i] == 0:
-                count += 1
-            if count == n:
-                print(i+1)
-                break
+    count = m
+    for i in range(m):
+        count += (total-1)//p[i]
+    
+    for i in range(m):
+        if total % p[i] == 0:
+            count += 1
+        if count == n:
+            print(i+1)
+            break
