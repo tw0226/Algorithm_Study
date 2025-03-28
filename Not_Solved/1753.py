@@ -1,4 +1,9 @@
 import heapq
+import sys
+input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
+
+
 v, e = map(int, input().split())
 start = int(input())
 INF = 1e9
@@ -7,8 +12,7 @@ dp = [INF for i in range(v+1)]
 
 for i in range(e):
     a, b, c = map(int, input().split())
-    # graph[a][b] = c
-    graph[a].append((c, b))
+    graph[a].append((b, c))
 
 q = []
 heapq.heappush(q, (0, start))
@@ -17,9 +21,8 @@ while q:
     curr_w, curr = heapq.heappop(q)
     if dp[curr] < curr_w:
         continue
-    for dest_w, dest in graph[curr]:
+    for dest, dest_w in graph[curr]:
         dist = curr_w + dest_w
-        print(dist, curr_w, dest_w)
         if dist < dp[dest]:
             dp[dest] = dist
             heapq.heappush(q, (dist, dest))
