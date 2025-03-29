@@ -1,30 +1,33 @@
 import heapq
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-
 
 v, e = map(int, input().split())
 start = int(input())
 INF = 1e9
-graph = [[] for i in range(v+1)]
 dp = [INF for i in range(v+1)]
-
+dp[start]=0
+graph = [[] for i in range(v+1)]
 for i in range(e):
     a, b, c = map(int, input().split())
-    graph[a].append((b, c))
+    graph[a].append((c, b))
 
-q = []
-heapq.heappush(q, (0, start))
-dp[start] = 0
-while q:
-    curr_w, curr = heapq.heappop(q)
-    if dp[curr] < curr_w:
-        continue
-    for dest, dest_w in graph[curr]:
-        dist = curr_w + dest_w
-        if dist < dp[dest]:
-            dp[dest] = dist
-            heapq.heappush(q, (dist, dest))
+queue = []
+def dijkstra(queue):
+    while queue:
+        curr_w, curr = heapq.heappop(queue)
+        if dp[curr] < curr_w:
+            continue
+        for next_w, next in graph[curr]:
+            dist = curr_w + next_w
+            if dp[next] > dist: 
+                dp[next] = dist
+                heapq.heappush(queue, (dist, next))
+heapq.heappush(queue, (0, start))
+dijkstra(queue)
 
-[print('INF') if x==INF else print(x) for x in dp[1:]]
+for i in range(1, v+1):
+    if dp[i] != INF:
+        print(dp[i])
+    else:
+        print("INF")
