@@ -2,24 +2,29 @@
 import sys
 input = sys.stdin.readline
 n, c = map(int, (input().split()))
-x = [0 for i in range(n+1)]
-node = []
+node = [0]
 for i in range(n):
-    h = input()
-    node.append(h)
-    x[h] = 1
-sorted(node)
+    node.append(int(input()))
+node = sorted(node)
 
-start, end = 0, n
+left, right = 1, n
 count = c-2
-dist = max(node) - min(node)
-while start<=end:
-    mid = (start+end)//2
-    if node[mid] == 0:
-        continue
-    elif node[mid] - node[start] < dist:
-        dist = node[mid]-node[start]
-        end = mid -1
-    elif node[end] - node[mid] < dist:
-        dist = node[end] - node[mid]
-        start = mid +1
+max_dist = 0
+
+while left<right and count != 0:
+    mid = (left+right)//2
+    left_dist = node[mid] - node[left]
+    right_dist = node[right] - node[mid]
+    curr_max_dist = min(left_dist, right_dist)
+    if max_dist < curr_max_dist:
+        max_dist = curr_max_dist
+        count -= 1
+        print(mid)
+    
+    print(left, right, mid, left_dist, right_dist, max_dist, curr_max_dist)
+    if left_dist < right_dist:
+        right = mid -1
+    else:
+        left = mid + 1
+    
+print(max_dist)
