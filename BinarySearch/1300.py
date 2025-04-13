@@ -6,17 +6,16 @@
 # 링크 참고 : https://claude-u.tistory.com/449
 n = int(input())
 k = int(input())
-
 start, end = 1, n**2
-result = 0
+result = 0 
 while start <= end:
     mid = (start+end)//2
-    value = 0
+    count = 0
     for i in range(1, n+1):
-        value += min(mid//i, n)
-    if value >= k:
-        result = mid
-        end = mid - 1
+        count += min(n, mid//i)
+    if count < k:
+        start = mid+1
     else:
-        start = mid + 1
+        result = mid
+        end = mid-1
 print(result)
