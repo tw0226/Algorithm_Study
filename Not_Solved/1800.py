@@ -1,4 +1,7 @@
-# 다익스트라는 구현했는데 뭔가 잘못된 것 같다..
+# 다익스트라는 구현했는데 뭔가 잘못된 것 같다
+# 이분탐색으로 구현할만한 공간이 있을까?
+
+
 import heapq
 n, p, k = map(int, input().split())
 net = [[] for i in range(n+1)]

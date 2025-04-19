@@ -1,36 +1,25 @@
-from collections import deque
+import heapq
 n, m = map(int, input().split())
-graph = [[] for i in range(n+1)]
+land = [[] for i in range(n+1)]
 for i in range(m):
-    a,b,c = map(int, input().split())
-    graph[a].append([b, c])
-    graph[b].append([a, c])
+    a, b, c = map(int, input().split())
+    land[a].append((c, b))
+    land[b].append((c, a))
 
-_from, _to = map(int, input().split())
-start, end = 1, int(1e9)
+dist = [1e9 for i in range(n+1)]
+visited = [0 for i in range(n+1)]
+start, end = map(int, input().split())
+node = []
+heapq.heappush(node, (0, start))
 
-def bfs(val):
-    visited = [0 for i in range(n+1)]
-    queue = deque()
-    queue.append(_from)
-    visited[_from] = True
-    while queue:
-        curr = queue.popleft()
-        for dest, weight in graph[curr]:
-            if not visited[dest] and weight >= val:
-                visited[dest] = True
-                queue.append(dest)
-    if visited[_to]:
-        return True
-    else:
-        return False
-
-result = 0
-while start<=end:
-    mid = (start+end)//2
-    if bfs(mid):
-        start = mid+1
-        result = mid
-    else:
-        end = mid-1
-print(result)
+while node:
+    curr_dist, curr_node = heapq.heappop(node)
+    visited[curr_node] = True
+    for next_dist, next_node in land[curr_node]:
+        if visited[next_node]:
+            continue
+        min_dist = next_dist + curr_dist
+        if not visited[next_dist] and min_dist< dist[next_node]:
+            dist[next_node] = min_dist
+            heapq.heappush(node, (min_dist, next_node))
+print(dist[end])
